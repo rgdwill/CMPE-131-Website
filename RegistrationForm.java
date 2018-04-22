@@ -32,29 +32,31 @@ public class RegistrationForm extends JFrame{
 		
 		registration.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				Connection connect;
-				String dbusername = "test0";
-				String dbpassword = "test1";
-				String database = "test2";
-				String dbUrl = "jdbc:mysql://localhost/"+database;
-				Class.forName("com.mysql.jdbc.Driver");
-				connect = DriverManager.getConnection(dbUrl, dbusername, dbpassword);
-				Statement statement = connect.createStatement();
-				ResultSet resultSet = statement.executeQuery("");
-				if(resultSet.next()) {
-					if(resultSet.getString("UserID").equalsIgnoreCase(username.getText())) {
-						JOptionPane.showMessageDialog(null, "This username has been registered");
+				try {
+					Connection connect;
+					String dbusername = "test0";
+					String dbpassword = "test1";
+					String database = "test2";
+					String dbUrl = "jdbc:mysql://localhost/"+database;
+					Class.forName("com.mysql.jdbc.Driver");
+					connect = DriverManager.getConnection(dbUrl, dbusername, dbpassword);
+					Statement statement = connect.createStatement();
+					ResultSet resultSet = statement.executeQuery("");
+					if(resultSet.next()) {
+						if(resultSet.getString("UserID").equalsIgnoreCase(username.getText())) {
+							JOptionPane.showMessageDialog(null, "This username has been registered");
+						}
+						else {
+							PreparedStatement resultSetRegister = connect.prepareStatement("");
+							resultSetRegister.setString(1, username.getText());
+							resultSetRegister.setString(2, password.getText());
+							resultSetRegister.executeUpdate();
+							JOptionPane.showMessageDialog(null, "");
+						}
 					}
-					else {
-						PreparedStatement resultSetRegister = connect.prepareStatement("");
-						resultSetRegister.setString(1, username.getText());
-						resultSetRegister.setString(2, password.getText());
-						resultSetRegister.executeUpdate();
-						JOptionPane.showMessageDialog(null, "");
-					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		});
 	}
