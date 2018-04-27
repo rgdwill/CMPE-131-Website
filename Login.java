@@ -14,20 +14,31 @@ public class Login{
 			Statement stmt=con.createStatement();
 			
 			//execute query for password for given username
-			ResultSet rs=stmt.executeQuery("SELECT password FROM users WHERE username='"+un+"'");  
+			ResultSet rs=stmt.executeQuery("SELECT password FROM users WHERE username='"+un+"'"); 
+			//After query pointer is set on record
+			//moves pointer before record
 			rs.beforeFirst();
-			rs.next();
 			
-			//if entered password matches password in database return true
-			if(pw.equals(rs.getString(1))) {
-				status = true;
+			//Checks that username exists based on if the pointer is before a record
+			if(rs.isBeforeFirst()) {
+				//Moves pointer back onto record so we can get string
+				rs.next();
+				//if entered password matches password in database return true
+				if(pw.equals(rs.getString(1))) {
+					status = true;
+				}
 			}
+			
+			else
+				status=false;
+			
 			//close connection
 			con.close();
 		} 
 
 		catch(Exception e){ 
-			System.out.println(e);}  
+			System.out.println(e);} 
+		
 		return status;
-	}  
+	}
 }
