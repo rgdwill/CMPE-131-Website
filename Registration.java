@@ -20,8 +20,12 @@ public class Registration {
 			ResultSet rs = stmt.executeQuery("CREATE USER 'un'@'jdbc:mysql://localhost:3306/moviedb' IDENTIFIED BY 'pw', 'first', 'last', 'email'");
 			
 			if(rs.isBeforeFirst()) {
-				return false;
+				rs.next();
+				if(un.equals(rs.getString(1))) {
+					return false;
+				}
 			}
+			con.close();
 		}
 		catch(Exception e) {
 			System.out.println(e);
