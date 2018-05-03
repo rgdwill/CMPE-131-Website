@@ -17,7 +17,7 @@ public class Registration {
 			
 			Statement stmt=con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("CREATE USER 'un'@'jdbc:mysql://localhost:3306/moviedb' IDENTIFIED BY 'pw', 'first', 'last', 'email'");
+			ResultSet rs = stmt.executeQuery("INSERT INTO users VALUES ('un','pw','first','last','email')");
 			
 			if(rs.isBeforeFirst()) {
 				rs.next();
