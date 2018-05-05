@@ -4,7 +4,7 @@ public class Search{
 
 	
 	
-	public static boolean validate(String title, String year, string genre, string id) {
+	public static boolean validate(String title, String year, String genre, String id) {
 		boolean status=false;
 		
 	try{  
